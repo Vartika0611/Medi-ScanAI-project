@@ -1,0 +1,13 @@
+<nav style="background-color: #007bff; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+  
+
+  <div>
+    {% if user.is_authenticated %}
+      <span style="color: #fff; margin-right: 10px;">👋 Welcome, <b>{{ user.username }}</b></span>
+      <a href="{% url 'logout' %}" style="color: white; text-decoration: none;">Logout</a>
+    {% else %}
+      <a href="{% url 'user_login' %}" style="color: white; text-decoration: none; margin-right: 15px;">Login</a>
+      <a href="{% url 'signup' %}" style="color: white; text-decoration: none;">Sign Up</a>
+    {% endif %}
+  </div>
+</nav>

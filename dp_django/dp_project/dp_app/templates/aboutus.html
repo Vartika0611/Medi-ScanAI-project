@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Us - Disease Prediction System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: #dc3545;
+    }
+
+    .section-title {
+      font-weight: 600;
+      color: #dc3545;
+    }
+
+    .contact-form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background-color: #dc3545;
+      color: white;
+      padding: 15px 0;
+      font-size: 1rem;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <!-- Header -->
+  <div class="row">
+    <div class="col-12 bg-danger text-white text-center py-3 fs-2 fw-bold">
+      Disease Prediction System
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm rounded mt-2">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">Medi-ScanAI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'prediction' %}">Prediction</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'history' %}">History</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'upload_report' %}">Upload Report</a></li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                </li>
+              </ul>
+
+              <!-- ✅ User Login / Signup or Username Dropdown -->
+              <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-danger fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                      {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li><a class="dropdown-item" href="{% url 'prediction' %}">Prediction</a></li>
+                      <li><a class="dropdown-item" href="{% url 'history' %}">History</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link text-danger fw-semibold" href="{% url 'userlogin' %}">Login</a>
+                  </li>
+                  
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </nav>
+    </div>
+  </div>
+
+ <!-- ✅ About Section -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+
+      <div class="bg-white p-5 rounded shadow-lg">
+
+        <!-- Section Heading -->
+        <div class="text-center mb-4">
+          <h2 class="fw-bold text-danger">About Medi-ScanAI System</h2>
+          <p class="text-muted fs-5">AI-powered platform for fast and intelligent disease prediction</p>
+        </div>
+
+        <!-- Text & Image Section -->
+        <div class="row align-items-center">
+          <div class="col-md-4 mb-3">
+            <img src="{% static 'images/about_section.png' %}" alt="Disease Prediction"
+                 class="img-fluid rounded shadow-sm" style="max-width: 359px;">
+          </div>
+          <div class="col-md-8 p-5" style="background-color:#fff0f0; border:1px solid #ff4d4d; padding:20px; border-radius:8px; margin-bottom:20px;">
+            <p class="fs-5 text-muted ">
+              The <strong>Disease Prediction System (DPS)</strong> helps users identify potential diseases
+              based on their symptoms. Powered by machine learning, it predicts health conditions quickly
+              and gives users better awareness before consulting a medical professional.
+            </p>
+
+            <a href="{% url 'prediction' %}" class="btn btn-danger mt-2 px-4 py-2">
+              Start Prediction
+            </a>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Cards Grid -->
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">⚙️</div>
+                <h5 class="fw-bold">ML-Based Predictions</h5>
+                <p class="text-muted">Accurate disease prediction using trained ML models.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">📝</div>
+                <h5 class="fw-bold">Bulk CSV Upload</h5>
+                <p class="text-muted">Upload multiple symptom entries for batch prediction.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">📊</div>
+                <h5 class="fw-bold">Prediction History</h5>
+                <p class="text-muted">Track previous predictions with a detailed record.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">🧠</div>
+                <h5 class="fw-bold">Real-Time Analysis</h5>
+                <p class="text-muted">Instant processing and disease prediction on screen.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">🔒</div>
+                <h5 class="fw-bold">Privacy First</h5>
+                <p class="text-muted">User symptom data is not stored or shared.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body text-center">
+                <div class="display-6 text-danger mb-3">📱</div>
+                <h5 class="fw-bold">Responsive Design</h5>
+                <p class="text-muted">Fully optimized for desktop, tablet, and mobile.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Learn More Button -->
+        <div class="text-center mt-4">
+          <a href="{% url 'about' %}" class="btn btn-outline-danger px-4 py-2">Learn More</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Footer -->
+    <div class="row">
+      <div class="col-12 bg-danger text-white text-center py-1 fs-2 fw-bold">
+        <footer class="text-center">
+          &copy; 2025 Disease Prediction System. All Rights Reserved.
+        </footer>
+      </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
